@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0e8fa37ca4ae2a9cbc23b8b0a31b586",
+    "content-hash": "5f4f3c027efc65ebdf24fdf4d6bdf8b0",
     "packages": [
         {
             "name": "brick/math",
@@ -2447,6 +2447,64 @@
             "time": "2023-04-26T03:02:31+00:00"
         },
         {
+            "name": "hyperf/paginator",
+            "version": "v3.0.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/paginator.git",
+                "reference": "5e732c60fb47be062970a2d436e3bee341f15302"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/paginator/zipball/5e732c60fb47be062970a2d436e3bee341f15302",
+                "reference": "5e732c60fb47be062970a2d436e3bee341f15302",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/contract": "~3.0.0",
+                "hyperf/support": "~3.0.0",
+                "hyperf/utils": "~3.0.0",
+                "php": ">=7.2"
+            },
+            "suggest": {
+                "hyperf/event": "Reqiured to use PageResolverListener.",
+                "hyperf/framework": "Reqiured to use PageResolverListener.",
+                "hyperf/http-server": "Reqiured to use PageResolverListener."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Paginator\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Paginator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A paginator component for hyperf.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "paginator",
+                "php"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2023-04-26T03:02:31+00:00"
+        },
+        {
             "name": "hyperf/pipeline",
             "version": "v3.0.16",
             "source": {
@@ -2671,6 +2729,64 @@
                 "source": "https://github.com/hyperf/hyperf"
             },
             "time": "2023-05-15T04:08:45+00:00"
+        },
+        {
+            "name": "hyperf/resource",
+            "version": "v3.0.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperf/resource.git",
+                "reference": "2b65201ca475cf45fb2070cfca95a4b8a85f82f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperf/resource/zipball/2b65201ca475cf45fb2070cfca95a4b8a85f82f6",
+                "reference": "2b65201ca475cf45fb2070cfca95a4b8a85f82f6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "hyperf/codec": "~3.0.0",
+                "hyperf/http-message": "~3.0.0",
+                "hyperf/paginator": "~3.0.0",
+                "hyperf/support": "~3.0.0",
+                "hyperf/tappable": "~3.0.0",
+                "hyperf/utils": "~3.0.0",
+                "php": ">=8.0",
+                "psr/container": "^1.0|^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                },
+                "hyperf": {
+                    "config": "Hyperf\\Resource\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hyperf\\Resource\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A api resource component for hyperf.",
+            "homepage": "https://hyperf.io",
+            "keywords": [
+                "hyperf",
+                "php",
+                "resource"
+            ],
+            "support": {
+                "docs": "https://hyperf.wiki",
+                "issues": "https://github.com/hyperf/hyperf/issues",
+                "pull-request": "https://github.com/hyperf/hyperf/pulls",
+                "source": "https://github.com/hyperf/hyperf"
+            },
+            "time": "2023-04-26T03:02:31+00:00"
         },
         {
             "name": "hyperf/serializer",

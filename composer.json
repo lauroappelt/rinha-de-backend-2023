@@ -13,6 +13,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=8.0",
+        "guzzlehttp/guzzle": "^7.7",
         "hyperf/cache": "~3.0.0",
         "hyperf/command": "~3.0.0",
         "hyperf/config": "~3.0.0",
@@ -26,6 +27,7 @@
         "hyperf/memory": "~3.0.0",
         "hyperf/process": "~3.0.0",
         "hyperf/redis": "~3.0.0",
+        "hyperf/resource": "^3.0",
         "hyperf/validation": "^3.0",
         "ramsey/uuid": "^4.7"
     },
@@ -71,7 +73,7 @@
         "post-autoload-dump": [
             "rm -rf runtime/container"
         ],
-        "test": "co-phpunit --prepend test/bootstrap.php -c phpunit.xml --colors=always",
+        "test": "co-phpunit --prepend test/bootstrap.php -c phpunit.xml --colors=always --testdox",
         "cs-fix": "php-cs-fixer fix $1",
         "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./app ./config",
         "start": [
