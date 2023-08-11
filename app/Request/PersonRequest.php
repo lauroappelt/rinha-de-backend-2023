@@ -22,8 +22,8 @@ class PersonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'apelido' => 'required|max:32|unique:person,apelido',
-            'nome' => 'required|max:100',
+            'apelido' => 'required|string|max:32|unique:person,apelido',
+            'nome' => 'required|string|max:100',
             'nascimento' => 'required|date|date_format:Y-m-d',
             'stack' => 'nullable|array',
             'stack.*' => 'string|max:32'

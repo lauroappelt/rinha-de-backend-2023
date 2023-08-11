@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Person;
 use Hyperf\HttpServer\Contract\ResponseInterface;
-use Ramsey\Uuid\Uuid;
 use App\Request\PersonRequest;
+use App\Resource\PersonResource;
+use App\Service\PersonService;
 
 class PersonController extends AbstractController
-{
-    public function __construct()
+{   
+    private $personService;
+
+    public function __construct(PersonService $personService)
     {
-        
+        $this->personService = $personService;
     }
     
     public function createPerson(PersonRequest $request, ResponseInterface $response)
-    {   
-        $params = $request->all();
-        $params['id'] ??= Uuid::uuid4();
-        $params['searchable'] = 'as';
-        Person::create($params);
-        return $response->json([])->withStatus(201);
+    {       
+        $person = $this->personService->createPerson($request->all());
+        return (new PersonResource($person))->toResponse();
     }
 }
