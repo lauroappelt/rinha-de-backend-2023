@@ -10,8 +10,6 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./:/app
-        ports:
-            - 9501:9501
         networks:
             - rinha
         depends_on:
@@ -21,8 +19,28 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
-                    memory: '0.7GB'
+                    cpus: '0.4'
+                    memory: '0.5GB'
+
+    #api1
+    api-02:
+        container_name: rinha-backend-api-02
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/app1
+        networks:
+            - rinha
+        depends_on:
+            - db
+            - nginx
+            - redis
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.4'
+                    memory: '0.5GB'
 
     # postgres
     db:
@@ -42,7 +60,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
+                    cpus: '0.3'
                     memory: '0.7GB'
 
   # nginx

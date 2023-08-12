@@ -24,7 +24,7 @@ return [
         'prefix' => env('DB_PREFIX', ''),
         'pool' => [
             'min_connections' => 1,
-            'max_connections' => 100,
+            'max_connections' => 50,
             'connect_timeout' => 10.0,
             'wait_timeout' => 3.0,
             'heartbeat' => -1,

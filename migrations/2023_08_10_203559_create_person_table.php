@@ -12,9 +12,10 @@ class CreatePersonTable extends Migration
     public function up(): void
     {
         Schema::create('person', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('apelido', 32);
-            $table->string('nome', 100);
+            $table->uuid('id')->primary();
+            $table->string('apelido', 32)->unique();
+            $table->text('nome', 100);
+            $table->date('nascimento');
         });
     }
 

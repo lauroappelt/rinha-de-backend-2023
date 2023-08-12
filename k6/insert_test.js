@@ -21,7 +21,7 @@ export default function () {
     },
   };
 
-  let response = http.post('http://192.168.92.136:9999/pessoas', JSON.stringify(payload), params);
+  let response = http.post('http://192.168.1.4:9999/pessoas', JSON.stringify(payload), params);
 
   check(response, {
     'is status 201 or 422': (r) => r.status === 201 || r.status === 422,

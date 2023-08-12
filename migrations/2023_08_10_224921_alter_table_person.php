@@ -12,8 +12,9 @@ class AlterTablePerson extends Migration
     public function up(): void
     {
         Schema::table('person', function (Blueprint $table) {
-            $table->jsonb('stack');
-            $table->string('searchable');
+            $table->jsonb('stack')->nullable();
+            $table->text('searchable');
+            $table->fullText('searchable');
         });
     }
 

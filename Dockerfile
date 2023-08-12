@@ -47,10 +47,6 @@ RUN set -ex \
 WORKDIR /app
 
 
-# Composer Cache
-# COPY ./composer.* /opt/www/
-# RUN composer install --no-dev --no-scripts
-
 COPY . /app
 
 RUN composer install

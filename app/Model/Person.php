@@ -22,7 +22,7 @@ class Person extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected array $fillable = ['id', 'apelido', 'nome', 'stack', 'searchable'];
+    protected array $fillable = ['id', 'apelido', 'nome', 'nascimento','stack', 'searchable'];
 
     /**
      * The attributes that should be cast to native types.
