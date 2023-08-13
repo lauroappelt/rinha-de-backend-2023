@@ -15,9 +15,9 @@ class PersonService
             $data['id'] = Uuid::uuid4();
 
             if (is_array($data['stack'])) {
-                $data['searchable'] = strtolower($data['apelido'] . ' ' . $data['nome'] . ' ' . implode(' ', $data['stack']));
+                $data['searchable'] = $data['apelido'] . ' ' . $data['nome'] . ' ' . implode(' ', $data['stack']);
             } else {
-                $data['searchable'] = strtolower($data['apelido'] . ' ' . $data['nome']);
+                $data['searchable'] = $data['apelido'] . ' ' . $data['nome'];
             }
 
             $person = Person::create($data);           
@@ -42,12 +42,13 @@ class PersonService
 
     public function searchPerson(String $term)
     {   
-        //like é feio - mas full text search n rolou
+
         // $persons = Db::table('person')
         //     ->whereRaw("searchable like ?", [strtolower('%' . $term . '%')])
         //     ->limit(50)
         //     ->get(['id', 'apelido', 'nome', 'nascimento']);
-        
-        return [];
+
+        $result = Db::select("select id, apelido, nascimento, stack from person where to_tsvector('english'::regconfig, searchable) @@ plainto_tsquery('english'::regconfig, ?) limit 50;", [$term]);
+        return $result;
     }
 }

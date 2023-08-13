@@ -29,7 +29,7 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - ./:/app1
+            - ./:/app
         networks:
             - rinha
         depends_on:
@@ -60,7 +60,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.3'
+                    cpus: '0.5'
                     memory: '0.7GB'
 
   # nginx
