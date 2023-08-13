@@ -16,6 +16,8 @@ services:
             - db
             - nginx
             - redis
+        command: bash -c "php bin/hyperf.php migrate &&
+                 php bin/hyperf.php server:watch"
         deploy:
             resources:
                 limits:
@@ -36,6 +38,7 @@ services:
             - db
             - nginx
             - redis
+        command: bash -c "php bin/hyperf.php server:watch"
         deploy:
             resources:
                 limits:

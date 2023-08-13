@@ -53,4 +53,4 @@ RUN composer install
 
 EXPOSE 9501
 
-ENTRYPOINT ["php", "bin/hyperf.php", "server:watch"]
+# ENTRYPOINT ["php", "bin/hyperf.php", "server:watch"]
