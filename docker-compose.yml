@@ -5,11 +5,7 @@ services:
     #api1
     api-01:
         container_name: rinha-backend-api-01
-        build:
-            context: .
-            dockerfile: Dockerfile
-        volumes:
-            - ./:/app
+        image: lauroappelt/rinhabackend2023q3:1.0
         networks:
             - rinha
         depends_on:
@@ -27,11 +23,7 @@ services:
     #api1
     api-02:
         container_name: rinha-backend-api-02
-        build:
-            context: .
-            dockerfile: Dockerfile
-        volumes:
-            - ./:/app
+        image: lauroappelt/rinhabackend2023q3:1.0
         networks:
             - rinha
         depends_on:
@@ -51,9 +43,9 @@ services:
         container_name: rinha-backend-db
         image: postgres:13.11
         environment:
-            POSTGRES_DB: ${DB_DATABASE}
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_DB: rinha-backend-db
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: rinha
             PGDATA: /var/lib/postgresql/data/db-files/
         volumes:
             - pg_data:/var/lib/postgresql/data
