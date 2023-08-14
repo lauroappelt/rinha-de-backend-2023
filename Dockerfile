@@ -49,7 +49,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN composer install
+#RUN composer install
 
 EXPOSE 9501
 

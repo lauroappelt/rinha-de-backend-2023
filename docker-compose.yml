@@ -16,7 +16,7 @@ services:
             - db
             - nginx
             - redis
-        command: bash -c "php bin/hyperf.php migrate &&
+        command: bash -c "echo 'Aguardando serviços subirem' && sleep 10 && composer install && php bin/hyperf.php migrate &&
                  php bin/hyperf.php server:watch"
         deploy:
             resources:
@@ -38,7 +38,8 @@ services:
             - db
             - nginx
             - redis
-        command: bash -c "php bin/hyperf.php server:watch"
+            - api-01
+        command: bash -c "echo 'Aguardando api-01 subir - caso houver erro exited favor rodar docker-compose novamente' && sleep 60 && php bin/hyperf.php server:watch"
         deploy:
             resources:
                 limits:
