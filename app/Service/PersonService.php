@@ -7,8 +7,17 @@ use Hyperf\Database\Exception\QueryException;
 use Ramsey\Uuid\Uuid;
 use Hyperf\DbConnection\Db;
 use App\Exception\UniqueException;
+use Hyperf\Context\ApplicationContext;
 class PersonService
-{
+{   
+    private $redisClient;
+
+    public function __construct()
+    {   
+        $container = ApplicationContext::getContainer();
+        $this->redisClient = $container->get(\Redis::class);
+    }
+
     public function createPerson(array $data): Person
     {
         try {
@@ -20,8 +29,12 @@ class PersonService
                 $data['searchable'] = $data['apelido'] . ' ' . $data['nome'];
             }
 
-            $person = Person::create($data);           
+            $person = Person::create($data);
             
+            //cache
+            $this->redisClient->set('person.' . $person->id, json_encode($person->toArray()));
+            $this->redisClient->expire('person.' . $person->id, 90);
+
             return $person;
         } catch (QueryException $exception) {
             if ($exception->getCode() === '23505') {
@@ -31,7 +44,13 @@ class PersonService
     }
 
     public function getPerson(String $id): Person
-    {
+    {   
+        $personCached =$this->redisClient->get('person.' . $id);
+        if ($personCached) {
+            $personCached =  (array) json_decode($personCached);
+            return new Person($personCached);
+        }
+
         $person = Person::find($id);
         if ($person == null) {
             throw new NotFoundException("Not Found");
@@ -42,12 +61,6 @@ class PersonService
 
     public function searchPerson(String $term)
     {   
-
-        // $persons = Db::table('person')
-        //     ->whereRaw("searchable like ?", [strtolower('%' . $term . '%')])
-        //     ->limit(50)
-        //     ->get(['id', 'apelido', 'nome', 'nascimento']);
-
         $result = Db::select("select id, apelido, nascimento, stack from person where to_tsvector('english'::regconfig, searchable) @@ plainto_tsquery('english'::regconfig, ?) limit 50;", [$term]);
         return $result;
     }

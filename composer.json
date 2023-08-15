@@ -14,6 +14,7 @@
     "require": {
         "php": ">=8.0",
         "guzzlehttp/guzzle": "^7.7",
+        "hyperf/async-queue": "^3.0",
         "hyperf/cache": "~3.0.0",
         "hyperf/command": "~3.0.0",
         "hyperf/config": "~3.0.0",
@@ -26,7 +27,7 @@
         "hyperf/logger": "~3.0.0",
         "hyperf/memory": "~3.0.0",
         "hyperf/process": "~3.0.0",
-        "hyperf/redis": "~3.0.0",
+        "hyperf/redis": "^3.0",
         "hyperf/resource": "^3.0",
         "hyperf/validation": "^3.0",
         "ramsey/uuid": "^4.7"
