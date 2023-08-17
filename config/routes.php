@@ -14,3 +14,4 @@ use Hyperf\HttpServer\Router\Router;
 Router::post('/pessoas', [App\Controller\PersonController::class, 'createPerson']);
 Router::get('/pessoas', [App\Controller\PersonController::class, 'searchPerson']);
 Router::get('/pessoas/{id}', [App\Controller\PersonController::class, 'getPerson']);
+Router::get('/contagem-pessoas', [App\Controller\PersonController::class, 'countPerson']);
