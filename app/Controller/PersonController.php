@@ -51,4 +51,10 @@ class PersonController extends AbstractController
         $persons = $this->personService->searchPerson($term);
         return $response->json($persons)->withStatus(200);
     }
+
+    public function countPerson(RequestInterface $request, ResponseInterface $response)
+    {
+        $count = $this->personService->countPerson();
+        return $count;
+    }
 }

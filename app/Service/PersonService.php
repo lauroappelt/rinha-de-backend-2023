@@ -11,29 +11,29 @@ use Hyperf\Context\ApplicationContext;
 class PersonService
 {   
     private $redisClient;
+    private $personQueue;
 
-    public function __construct()
+    public function __construct(PersonQueueService $personQueue)
     {   
         $container = ApplicationContext::getContainer();
         $this->redisClient = $container->get(\Redis::class);
+
+        $this->personQueue = $personQueue;
     }
 
     public function createPerson(array $data): Person
     {
         try {
             $data['id'] = Uuid::uuid4();
+            $person = new Person($data);
+            $personKey = 'person.' . $person->id;
 
-            if (is_array($data['stack'])) {
-                $data['searchable'] = $data['apelido'] . ' ' . $data['nome'] . ' ' . implode(' ', $data['stack']);
-            } else {
-                $data['searchable'] = $data['apelido'] . ' ' . $data['nome'];
-            }
-
-            $person = Person::create($data);
-            
             //cache
-            $this->redisClient->set('person.' . $person->id, json_encode($person->toArray()));
-            $this->redisClient->expire('person.' . $person->id, 90);
+            $this->redisClient->set($personKey, json_encode($data));
+            $this->redisClient->expire($personKey, 180);
+
+            //queue
+            $this->personQueue->push($data);
 
             return $person;
         } catch (QueryException $exception) {
@@ -63,5 +63,11 @@ class PersonService
     {   
         $result = Db::select("select id, apelido, nascimento, stack from person where to_tsvector('english'::regconfig, searchable) @@ plainto_tsquery('english'::regconfig, ?) limit 50;", [$term]);
         return $result;
+    }
+
+    public function countPerson()
+    {
+        $count = Db::table('person')->count();
+        return $count;
     }
 }
