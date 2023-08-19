@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Job;
 
 use Hyperf\AsyncQueue\Job;
-use App\Model\Person;
-use Hyperf\Database\Exception\QueryException;
-use Hyperf\Context\ApplicationContext;
 use Hyperf\DbConnection\Db;
 
 class PersonJob extends Job
@@ -22,9 +19,9 @@ class PersonJob extends Job
     public function handle()
     {
         if (is_array($this->params['stack'])) {
-            $data['searchable'] = $data['apelido'] . ' ' . $data['nome'] . ' ' . implode(' ', $data['stack']);
+            $searchable = $this->params['apelido'] . ' ' . $this->params['nome'] . ' ' . implode(' ',  $this->params['stack']);
         } else {
-            $data['searchable'] = $data['apelido'] . ' ' . $data['nome'];
+            $searchable =  $this->params['apelido'] . ' ' .  $this->params['nome'];
         }
 
         Db::statement("INSERT INTO person(id, apelido, nome, nascimento, stack, searchable) values (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING;", [
@@ -33,7 +30,7 @@ class PersonJob extends Job
             $this->params['nome'],
             $this->params['nascimento'],
             json_encode($this->params['stack']),
-            $data['searchable']
+            $searchable
         ]);
     }
 }
