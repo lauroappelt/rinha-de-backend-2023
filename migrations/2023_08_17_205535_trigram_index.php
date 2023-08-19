@@ -3,19 +3,18 @@
 use Hyperf\Database\Schema\Schema;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Migrations\Migration;
+use Hyperf\DbConnection\Db;
 
-class AlterTablePerson extends Migration
+class TrigramIndex extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('person', function (Blueprint $table) {
-            $table->jsonb('stack')->nullable();
-            $table->text('searchable');
-            // $table->fullText('searchable');
-        });
+         Db::statement("CREATE EXTENSION pg_trgm;");
+         Db::statement("CREATE INDEX idx_trigram_searchable ON person USING gin (searchable gin_trgm_ops);");
+        // Db::statement("SELECT set_limit(0.1);");
     }
 
     /**

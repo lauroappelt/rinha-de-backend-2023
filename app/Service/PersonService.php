@@ -23,24 +23,25 @@ class PersonService
 
     public function createPerson(array $data): Person
     {
-        try {
-            $data['id'] = Uuid::uuid4();
-            $person = new Person($data);
-            $personKey = 'person.' . $person->id;
-
-            //cache
-            $this->redisClient->set($personKey, json_encode($data));
-            $this->redisClient->expire($personKey, 180);
-
-            //queue
-            $this->personQueue->push($data);
-
-            return $person;
-        } catch (QueryException $exception) {
-            if ($exception->getCode() === '23505') {
-                throw new UniqueException($exception->getMessage());
-            }
+        $nickCached = $this->redisClient->get($data['apelido']);
+        if ($nickCached) {
+            throw new UniqueException("Unique nick violation");
         }
+
+        $this->redisClient->set($data['apelido'], '1');
+
+        $data['id'] = Uuid::uuid4();
+        $person = new Person($data);
+        $personKey = 'person.' . $person->id;
+
+        //cache
+        $this->redisClient->set($personKey, json_encode($data));
+        $this->redisClient->expire($personKey, 180);
+
+        //queue
+        $this->personQueue->push($data);
+
+        return $person;
     }
 
     public function getPerson(String $id): Person
@@ -61,7 +62,7 @@ class PersonService
 
     public function searchPerson(String $term)
     {   
-        $result = Db::select("select id, apelido, nascimento, stack from person where to_tsvector('english'::regconfig, searchable) @@ plainto_tsquery('english'::regconfig, ?) limit 50;", [$term]);
+        $result = Db::select("select id, apelido, nascimento, stack from person where searchable like ? limit 50;", ['%' . $term . '%']);
         return $result;
     }
 
