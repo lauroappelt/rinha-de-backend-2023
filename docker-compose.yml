@@ -20,7 +20,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
+                    cpus: '0.4'
                     memory: '0.5GB'
 
     #api1
@@ -38,11 +38,11 @@ services:
             - nginx
             - redis
             - api-01
-        command: bash -c "echo 'Aguardando api-01 subir - caso houver erro exited favor rodar docker-compose novamente' && sleep 60 && php bin/hyperf.php server:watch"
+        command: bash -c "echo 'Aguardando api-01 subir - caso houver erro exited favor rodar docker-compose novamente' && sleep 10 && php bin/hyperf.php server:watch"
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
+                    cpus: '0.4'
                     memory: '0.5GB'
 
     # postgres
@@ -63,7 +63,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.15'
+                    cpus: '0.35'
                     memory: '0.7GB'
 
   # nginx
