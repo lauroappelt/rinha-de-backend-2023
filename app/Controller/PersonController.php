@@ -24,7 +24,21 @@ class PersonController extends AbstractController
     public function createPerson(PersonRequest $request, ResponseInterface $response)
     {      
         try {
-            $person = $this->personService->createPerson($request->all());
+
+            $data = $request->all();
+            if (!is_string($data['apelido']) || !is_string($data['nome'])) {
+                return $response->withStatus(400);
+            }
+
+            if (is_array($data['stack'])) {
+                foreach ($data['stack'] as $stack) {
+                    if (!is_string($stack)){
+                        return $response->withStatus(400);
+                    }
+                }
+            }
+
+            $person = $this->personService->createPerson($data);
             return (new PersonResource($person))->withoutWrapping(true)->toResponse()->withHeader('Location', '/pessoas/' . $person->id)->withStatus(201);
         } catch (UniqueException $exception) {
             return $response->withStatus(422);

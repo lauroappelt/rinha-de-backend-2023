@@ -24,7 +24,7 @@ return [
             // LogLevel::CRITICAL,
             // LogLevel::DEBUG,
             // LogLevel::EMERGENCY,
-            LogLevel::ERROR,
+            // LogLevel::ERROR,
             // LogLevel::INFO,
             // LogLevel::NOTICE,
             // LogLevel::WARNING,
