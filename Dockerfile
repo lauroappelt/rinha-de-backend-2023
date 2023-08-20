@@ -46,11 +46,6 @@ RUN set -ex \
 
 WORKDIR /app
 
-
 COPY . /app
 
-#RUN composer install
-
 EXPOSE 9501
-
-# ENTRYPOINT ["php", "bin/hyperf.php", "server:watch"]

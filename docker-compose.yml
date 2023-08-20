@@ -16,11 +16,11 @@ services:
             - db
             - nginx
             - redis
-        command: bash -c "echo 'Aguardando serviços subirem' && sleep 10 && composer install && php bin/hyperf.php migrate &&php bin/hyperf.php server:watch"
+        command: bash -c "echo 'Aguardando serviços subirem' && sleep 10 && php bin/hyperf.php start"
         deploy:
             resources:
                 limits:
-                    cpus: '0.4'
+                    cpus: '0.3'
                     memory: '0.5GB'
 
     #api1
@@ -38,17 +38,17 @@ services:
             - nginx
             - redis
             - api-01
-        command: bash -c "echo 'Aguardando api-01 subir - caso houver erro exited favor rodar docker-compose novamente' && sleep 10 && php bin/hyperf.php server:watch"
+        command: bash -c "echo 'Aguardando api-01 subir - caso houver erro exited favor rodar docker-compose novamente' && sleep 10 && php bin/hyperf.php start"
         deploy:
             resources:
                 limits:
-                    cpus: '0.4'
+                    cpus: '0.3'
                     memory: '0.5GB'
 
     # postgres
     db:
         container_name: rinha-backend-db
-        image: postgres:13.11
+        image: postgres:15.4
         environment:
             POSTGRES_DB: ${DB_DATABASE}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -56,14 +56,15 @@ services:
             PGDATA: /var/lib/postgresql/data/db-files/
         volumes:
             - pg_data:/var/lib/postgresql/data
-        ports:
-            - 5432:5432
+            - ./docker/postgres/postgres.conf:/etc/postgresql.conf
+            - ./docker/postgres/db.sql:/docker-entrypoint-initdb.d/db.sql
+        command: 'postgres -c config_file="/etc/postgresql.conf"'
         networks:
             - rinha
         deploy:
             resources:
                 limits:
-                    cpus: '0.35'
+                    cpus: '0.65'
                     memory: '0.7GB'
 
   # nginx
@@ -93,7 +94,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.15'
+                    cpus: '0.1'
                     memory: '0.2GB'
 
 volumes:
