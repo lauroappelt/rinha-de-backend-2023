@@ -21,7 +21,7 @@ class PersonService
         $this->personQueue = $personQueue;
     }
 
-    public function createPerson(array $data): Person
+    public function createPerson(array $data)
     {
         $nickCached = $this->redisClient->get($data['apelido']);
         if ($nickCached) {
@@ -31,38 +31,36 @@ class PersonService
         $this->redisClient->set($data['apelido'], '1');
 
         $data['id'] = Uuid::uuid4();
-        $person = new Person($data);
-        $personKey = 'person.' . $person->id;
+        $personKey = 'person.' . $data['id'];
 
         //cache
         $this->redisClient->set($personKey, json_encode($data));
-        $this->redisClient->expire($personKey, 180);
 
         //queue
         $this->personQueue->push($data);
 
-        return $person;
+        return $data;
     }
 
-    public function getPerson(String $id): Person
+    public function getPerson(String $id)
     {   
         $personCached =$this->redisClient->get('person.' . $id);
         if ($personCached) {
-            $personCached =  (array) json_decode($personCached);
-            return new Person($personCached);
-        }
-
-        $person = Person::find($id);
-        if ($person == null) {
-            throw new NotFoundException("Not Found");
+            return json_decode($personCached);
         }
         
-        return $person;
+        throw new NotFoundException("Not Found");
     }
 
     public function searchPerson(String $term)
     {   
         $result = Db::select("select id, apelido, nascimento, stack from person where searchable like ? limit 50;", ['%' . $term . '%']);
+        foreach ($result as $person) {
+            if ($person->stack) {
+                $person->stack = json_decode($person->stack);
+            }
+        }
+        
         return $result;
     }
 

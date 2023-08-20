@@ -8,7 +8,6 @@ use App\Exception\NotFoundException;
 use App\Exception\UniqueException;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use App\Request\PersonRequest;
-use App\Resource\PersonResource;
 use App\Service\PersonService;
 use Hyperf\HttpServer\Contract\RequestInterface;
 
@@ -39,7 +38,7 @@ class PersonController extends AbstractController
             }
 
             $person = $this->personService->createPerson($data);
-            return (new PersonResource($person))->withoutWrapping(true)->toResponse()->withHeader('Location', '/pessoas/' . $person->id)->withStatus(201);
+            return $response->withHeader('Location', '/pessoas/' . $person['id'])->withStatus(201)->json($person);
         } catch (UniqueException $exception) {
             return $response->withStatus(422);
         }
@@ -49,7 +48,7 @@ class PersonController extends AbstractController
     {
         try {
             $person = $this->personService->getPerson($request->route('id'));
-            return (new PersonResource($person))->withoutWrapping(true)->toResponse()->withStatus(200);
+            return $response->json($person);
         } catch (NotFoundException $exception) {
             return $response->withStatus(404);
         }

@@ -17,11 +17,10 @@ class PersonJob extends Job
     }
 
     public function handle()
-    {
+    {   
+        $searchable =  $this->params['apelido'] . ' ' .  $this->params['nome'];
         if (is_array($this->params['stack'])) {
-            $searchable = $this->params['apelido'] . ' ' . $this->params['nome'] . ' ' . implode(' ',  $this->params['stack']);
-        } else {
-            $searchable =  $this->params['apelido'] . ' ' .  $this->params['nome'];
+            $searchable .= implode(' ',  $this->params['stack']);
         }
 
         Db::statement("INSERT INTO person(id, apelido, nome, nascimento, stack, searchable) values (?, ?, ?, ?, ?, ?) ON CONFLICT DO NOTHING;", [
