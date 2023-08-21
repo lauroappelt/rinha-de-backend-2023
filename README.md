@@ -1,6 +1,6 @@
 # Rinha de backend 2023
 
-![Achou que eu estava brincando?](/assets/php.jpeg)
+![](/assets/php.jpeg)
 
 Github [lauroappelt](https://github.com/lauroappelt)
 
