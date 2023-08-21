@@ -20,7 +20,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
+                    cpus: '0.45'
                     memory: '0.5GB'
 
     #api1
@@ -42,7 +42,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.5'
+                    cpus: '0.45'
                     memory: '0.5GB'
 
     # postgres
@@ -80,7 +80,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.15'
+                    cpus: '0.25'
                     memory: '0.2GB'
 
     # redis

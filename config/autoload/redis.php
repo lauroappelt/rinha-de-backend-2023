@@ -17,7 +17,7 @@ return [
         'db' => (int) env('REDIS_DB', 0),
         'pool' => [
             'min_connections' => 1,
-            'max_connections' => 1000,
+            'max_connections' => 2000,
             'connect_timeout' => 10.0,
             'wait_timeout' => 3.0,
             'heartbeat' => -1,

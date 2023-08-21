@@ -59,28 +59,6 @@ class PersonService
 
     public function searchPerson(String $term)
     {   
-        // $result = Db::select("select id, apelido, nascimento, stack from person where searchable like ? limit 50;", ['%' . $term . '%']);
-        // foreach ($result as $person) {
-        //     if ($person->stack) {
-        //         $person->stack = json_decode($person->stack);
-        //     }
-        // }
-
-        //metendo o louco
-        // $result = $this->redisClient->hgetall('persons');
-        // $find = [];
-        // $count = 0;
-        // foreach ($result as $key => $person) {
-        //     if (str_contains(strtolower($key), strtolower($term))) {
-        //         $find[] = json_decode($person);
-        //         $count++;
-
-        //         if ($count == 50) {
-        //             return $find;
-        //         }
-        //     }
-        // }
-
         $cursor = null;
         $elements = $this->redisClient->hscan('persons', $cursor, '*' . strtolower($term) . '*', 50);
         $find = [];
