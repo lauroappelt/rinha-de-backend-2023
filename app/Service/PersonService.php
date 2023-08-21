@@ -35,6 +35,11 @@ class PersonService
 
         //cache
         $this->redisClient->set($personKey, json_encode($data));
+        $searchable =  $data['apelido'] . ' ' .  $data['nome'];
+        if (is_array($data['stack'])) {
+            $searchable .= implode(' ',  $data['stack']);
+        }
+        $this->redisClient->hset('persons', strtolower($searchable), json_encode($data));
 
         //queue
         $this->personQueue->push($data);
@@ -54,14 +59,35 @@ class PersonService
 
     public function searchPerson(String $term)
     {   
-        $result = Db::select("select id, apelido, nascimento, stack from person where searchable like ? limit 50;", ['%' . $term . '%']);
-        foreach ($result as $person) {
-            if ($person->stack) {
-                $person->stack = json_decode($person->stack);
-            }
+        // $result = Db::select("select id, apelido, nascimento, stack from person where searchable like ? limit 50;", ['%' . $term . '%']);
+        // foreach ($result as $person) {
+        //     if ($person->stack) {
+        //         $person->stack = json_decode($person->stack);
+        //     }
+        // }
+
+        //metendo o louco
+        // $result = $this->redisClient->hgetall('persons');
+        // $find = [];
+        // $count = 0;
+        // foreach ($result as $key => $person) {
+        //     if (str_contains(strtolower($key), strtolower($term))) {
+        //         $find[] = json_decode($person);
+        //         $count++;
+
+        //         if ($count == 50) {
+        //             return $find;
+        //         }
+        //     }
+        // }
+
+        $cursor = null;
+        $elements = $this->redisClient->hscan('persons', $cursor, '*' . strtolower($term) . '*', 50);
+        $find = [];
+        foreach ($elements as $element) {
+            $find[] = json_decode($element);
         }
-        
-        return $result;
+        return $find;
     }
 
     public function countPerson()

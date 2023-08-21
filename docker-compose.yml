@@ -16,11 +16,11 @@ services:
             - db
             - nginx
             - redis
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "composer install && php bin/hyperf.php start"
         deploy:
             resources:
                 limits:
-                    cpus: '0.35'
+                    cpus: '0.5'
                     memory: '0.5GB'
 
     #api1
@@ -38,11 +38,11 @@ services:
             - nginx
             - redis
             - api-01
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "sleep 5 && php bin/hyperf.php start"
         deploy:
             resources:
                 limits:
-                    cpus: '0.35'
+                    cpus: '0.5'
                     memory: '0.5GB'
 
     # postgres
@@ -64,7 +64,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.55'
+                    cpus: '0.1'
                     memory: '0.7GB'
 
   # nginx
@@ -94,7 +94,7 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: '0.1'
+                    cpus: '0.25'
                     memory: '0.2GB'
 
 volumes:
