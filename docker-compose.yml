@@ -55,10 +55,9 @@ services:
             POSTGRES_USER: ${DB_USERNAME}
             PGDATA: /var/lib/postgresql/data/db-files/
         volumes:
-            - pg_data:/var/lib/postgresql/data
             - ./docker/postgres/postgres.conf:/etc/postgresql.conf
             - ./docker/postgres/db.sql:/docker-entrypoint-initdb.d/db.sql
-        command: 'postgres -c config_file="/etc/postgresql.conf"'
+        command: 'postgres -c config_file="/etc/postgresql.conf" -c "max_connections=450"'
         networks:
             - rinha
         deploy:
@@ -87,6 +86,7 @@ services:
     redis:
         container_name: rinha-backend-redis
         image: redis:latest
+        command: redis-server --save "" --appendonly no --maxclients 20000
         ports:
             - 6379:6379
         networks:
