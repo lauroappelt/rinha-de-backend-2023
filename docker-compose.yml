@@ -10,6 +10,16 @@ services:
             dockerfile: Dockerfile
         environment:
             HTTP_PORT: 9501
+            APP_NAME: skeleton
+            APP_ENV: dev
+            DB_DRIVER: pgsql
+            DB_HOST: localhost
+            DB_PORT: 5432
+            DB_DATABASE: rinha-backend-db
+            DB_USERNAME: rinha
+            DB_PASSWORD: postgres
+            REDIS_HOST: localhost
+            REDIS_PORT: 6379
         volumes:
             - ./:/app
         depends_on:
@@ -31,6 +41,16 @@ services:
             dockerfile: Dockerfile
         environment:
             HTTP_PORT: 9502
+            APP_NAME: skeleton
+            APP_ENV: dev
+            DB_DRIVER: pgsql
+            DB_HOST: localhost
+            DB_PORT: 5432
+            DB_DATABASE: rinha-backend-db
+            DB_USERNAME: rinha
+            DB_PASSWORD: postgres
+            REDIS_HOST: localhost
+            REDIS_PORT: 6379
         volumes:
             - ./:/app
         depends_on:
@@ -49,9 +69,9 @@ services:
         container_name: rinha-backend-db
         image: postgres:15.4
         environment:
-            POSTGRES_DB: ${DB_DATABASE}
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_DB: rinha-backend-db
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: rinha
         volumes:
             - ./docker/postgres/postgres.conf:/etc/postgresql.conf
             - ./docker/postgres/db.sql:/docker-entrypoint-initdb.d/db.sql
