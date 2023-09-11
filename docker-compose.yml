@@ -8,14 +8,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        environment:
-            HTTP_PORT: 9501
-        volumes:
-            - ./:/app
+        ports:
+            - "9501:9501"
+        # volumes:
+        #     - ./:/app
         depends_on:
             - db
             - redis
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "cp api1.env .env && php bin/hyperf.php start"
         network_mode: host
         deploy:
             resources:
@@ -29,14 +29,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        environment:
-            HTTP_PORT: 9502
-        volumes:
-            - ./:/app
+        ports:
+            - "9502:9502"
+        # volumes:
+        #     - ./:/app
         depends_on:
             - db
             - redis
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "cp api2.env .env && php bin/hyperf.php start"
         network_mode: host
         deploy:
             resources:
