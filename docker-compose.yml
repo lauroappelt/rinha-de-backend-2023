@@ -5,16 +5,15 @@ services:
     #api1
     api-01:
         container_name: rinha-backend-api-01
-        environment:
-            PORT: 9501
         build:
             context: .
             dockerfile: Dockerfile
+        environment:
+            HTTP_PORT: 9501
         volumes:
             - ./:/app
         depends_on:
             - db
-            - nginx
             - redis
         command: bash -c "php bin/hyperf.php start"
         network_mode: host
@@ -27,18 +26,16 @@ services:
     #api1
     api-02:
         container_name: rinha-backend-api-02
-        environment:
-            PORT: 9502
         build:
             context: .
             dockerfile: Dockerfile
+        environment:
+            HTTP_PORT: 9502
         volumes:
             - ./:/app
         depends_on:
             - db
-            - nginx
             - redis
-            - api-01
         command: bash -c "php bin/hyperf.php start"
         network_mode: host
         deploy:
@@ -73,6 +70,9 @@ services:
         volumes:
             - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
         network_mode: host
+        depends_on:
+            - api-01
+            - api-02
         deploy:
             resources:
                 limits:
