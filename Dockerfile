@@ -48,4 +48,3 @@ WORKDIR /app
 
 COPY . /app
 
-EXPOSE 9501
