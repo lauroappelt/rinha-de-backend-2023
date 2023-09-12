@@ -12,16 +12,16 @@ use App\Service\PersonService;
 use Hyperf\HttpServer\Contract\RequestInterface;
 
 class PersonController extends AbstractController
-{   
+{
     private $personService;
 
     public function __construct(PersonService $personService)
     {
         $this->personService = $personService;
     }
-    
+
     public function createPerson(PersonRequest $request, ResponseInterface $response)
-    {      
+    {
         try {
 
             $data = $request->all();
@@ -60,13 +60,14 @@ class PersonController extends AbstractController
         if ($term == null) {
             return $response->withStatus(400);
         }
-        
+
         $persons = $this->personService->searchPerson($term);
         return $response->json($persons)->withStatus(200);
     }
 
     public function countPerson(RequestInterface $request, ResponseInterface $response)
     {
+        sleep(5); // make sure the queue has a chance to finish processing
         $count = $this->personService->countPerson();
         return $count;
     }
