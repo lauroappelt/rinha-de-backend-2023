@@ -47,4 +47,3 @@ RUN set -ex \
 WORKDIR /app
 
 COPY . /app
-

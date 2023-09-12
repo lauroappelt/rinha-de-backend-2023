@@ -25,7 +25,7 @@ services:
         depends_on:
             - db
             - redis
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "cp api1.env .env && composer install && php bin/hyperf.php start"
         network_mode: host
         deploy:
             resources:
@@ -56,7 +56,7 @@ services:
         depends_on:
             - db
             - redis
-        command: bash -c "php bin/hyperf.php start"
+        command: bash -c "cp api2.env .env && composer install && php bin/hyperf.php start"
         network_mode: host
         deploy:
             resources:
