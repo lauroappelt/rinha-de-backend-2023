@@ -16,8 +16,7 @@ Link do projeto [https://github.com/lauroappelt/rinha-de-backend-2023](https://g
 
 ## para rodar o projeto
 
-docker-compose up -d
-
-docker exec rinha-backend-api-01 composer install 
-docker exec -d rinha-backend-api-01 php bin/hyperf.php start 
-docker exec -d rinha-backend-api-02 php bin/hyperf.php start
+* docker-compose up -d
+* docker exec rinha-backend-api-01 composer install 
+* docker exec -d rinha-backend-api-01 php bin/hyperf.php start 
+* docker exec -d rinha-backend-api-02 php bin/hyperf.php start
